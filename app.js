@@ -127,13 +127,18 @@ function handleClicks(event){
 
 surveyUl.addEventListener('click', handleClicks);
 
+var printResults = document.getElementById('printResults');
+
 function renderResults() {
-
-document.getElementById('printResults');
-
-// for ( var i = 0; i <= 25; i++){
-//   imageSources[i].clickCounter += 1;
-//   console.log(imageSources[i].clickCounter + ' clicks for ' + imageSources[i].imageName);
-  // return;
-// }
+  listOfVotes.innerHTML = '';
+  for ( var i = 0; i <= 25; i++){
+    var listEl = document.createElement('li');
+    listEl.textContent = imageSources[i].imageName + ' clicks for ' + imageSources[i].clickCounter;
+    listOfVotes.appendChild(listEl);
+    console.log(imageSources[i].clickCounter + ' clicks for ' + imageSources[i].imageName);
+  }
+  return;
 }
+
+
+printResults.addEventListener('click', renderResults);

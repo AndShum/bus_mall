@@ -8,19 +8,19 @@ new ImageConstructor('Breakfast', 'img/breakfast.jpg');
 new ImageConstructor('Bubblegum', 'img/chair.jpg');
 new ImageConstructor('Chair', 'img/chair.jpg');
 new ImageConstructor('Cthulhu', 'img/cthulhu.jpg');
-// new ImageConstructor('Dog Duck', 'img/dog_duck.jpg');
-// new ImageConstructor('Dragon Meat', 'img/dragon_meat.jpg');
-// new ImageConstructor('Pen', 'img/pen.jpg');
-// new ImageConstructor('Pet','img/pet.jpg');
-// new ImageConstructor('R2D2 Bag', 'img/r2d2.jpg');
-// new ImageConstructor('Rain Boots', 'img/rain_boots.jpg');
-// new ImageConstructor('Pizza Scissors', 'img/scissors.jpg');
-// new ImageConstructor('Shark Sleeping Bag', 'img/shark.jpg');
-// new ImageConstructor('Tauntaun Sleeping Bag', 'img/tauntaun.jpg');
-// new ImageConstructor('Unicorn', 'img/tauntaun.jpg');
-// new ImageConstructor('Tentacle USB', 'img/usb.gif');
-// new ImageConstructor('Water Can', 'img/usb.gif');
-// new ImageConstructor('Wine Glass', 'img/wine_glass.jpg');
+new ImageConstructor('Dog Duck', 'img/dog_duck.jpg');
+new ImageConstructor('Dragon Meat', 'img/dragon_meat.jpg');
+new ImageConstructor('Pen', 'img/pen.jpg');
+new ImageConstructor('Pet','img/pet.jpg');
+new ImageConstructor('R2D2 Bag', 'img/r2d2.jpg');
+new ImageConstructor('Rain Boots', 'img/rain_boots.jpg');
+new ImageConstructor('Pizza Scissors', 'img/scissors.jpg');
+new ImageConstructor('Shark Sleeping Bag', 'img/shark.jpg');
+new ImageConstructor('Tauntaun Sleeping Bag', 'img/tauntaun.jpg');
+new ImageConstructor('Unicorn', 'img/tauntaun.jpg');
+new ImageConstructor('Tentacle USB', 'img/usb.gif');
+new ImageConstructor('Water Can', 'img/usb.gif');
+new ImageConstructor('Wine Glass', 'img/wine_glass.jpg');
 
 
 function ImageConstructor(imageName, imagePath){
@@ -34,7 +34,6 @@ function ImageConstructor(imageName, imagePath){
 
 
 var currentImg = [];
-var randomImgArray = [];
 
 function randomNumber(){
   return Math.floor(Math.random() * imageSources.length);
@@ -50,11 +49,11 @@ function chooseImagesToDisplay() {
   var rightPhotoIndex = randomNumber();
 
   while(centerPhotoIndex === leftPhotoIndex){
-    leftPhotoIndex = randomNumber();
+    centerPhotoIndex = randomNumber();
   }
 
   while(rightPhotoIndex === leftPhotoIndex){
-    leftPhotoIndex = randomNumber();
+    rightPhotoIndex = randomNumber();
   }
 
   while(rightPhotoIndex === centerPhotoIndex){

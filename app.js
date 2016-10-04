@@ -1,8 +1,10 @@
 'use strict';
 
 var imageSources = [];
+var clicker = 0;
 
-var getUl = document.getElementById('surveyUl');
+
+var surveyUl = document.getElementById('surveyUl');
 var leftPhoto = document.getElementById('left_image');
 var centerPhoto = document.getElementById('center_image');
 var rightPhoto = document.getElementById('right_image');
@@ -31,7 +33,7 @@ new ImageConstructor('Wine Glass', 'img/wine_glass.jpg');
 function ImageConstructor(imageName, imagePath){
   this.imageName = imageName;
   this.imagePath = imagePath;
-  this.imageCounter = 0;
+  this.imageViews = 0;
   this.clickCounter = 0;
   imageSources.push(this);
   // console.log(this);
@@ -73,9 +75,9 @@ function createImg(){
   var imageIndices = chooseImagesToDisplay();
   console.log('imageIndices ' + imageIndices);
 
-  var leftItem = imageSources[imageIndices.leftPhotoIndex].imagePath;
-  var centerItem = imageSources[imageIndices.centerPhotoIndex].imagePath;
-  var rightItem = imageSources[imageIndices.rightPhotoIndex].imagePath;
+  var leftItem = imageSources[imageIndices.leftPhotoIndex];
+  var centerItem = imageSources[imageIndices.centerPhotoIndex];
+  var rightItem = imageSources[imageIndices.rightPhotoIndex];
 
   currentImg = [];
   currentImg.push(leftItem);
@@ -83,25 +85,55 @@ function createImg(){
   currentImg.push(rightItem);
 
   console.log('currentImg ' + currentImg );
-  leftPhoto.src = currentImg[0];
-  centerPhoto.src = currentImg[1];
-  rightPhoto.src = currentImg[2];
+  leftPhoto.src = currentImg[0].imagePath;
+  centerPhoto.src = currentImg[1].imagePath;
+  rightPhoto.src = currentImg[2].imagePath;
 }
 
 createImg();
 
-getUl.addEventListener('click', createImg);
-getUl.addEventListener('click', handleClicks);
+function handleClicks(event){
+  console.log('handleClicks', event);
 
-function handleClicks(){
-  if(event.target.id === 'getUl'){
+
+  if(event.target.id === 'surveyUl'){
     console.log('You must click on an image.');
-  }
-  for ( var i = 0; i <= 25; i++){
-    ImageConstructor.clickCounter += 1;
-    console.log( ImageConstructor.clickCounter + ' clicks for ' + ImageConstructor.imageName);
     return;
   }
+
+  if (event.target.id === 'left_image') {
+    currentImg[0].clickCounter += 1;
+    clicker += 1;
+    console.log(clicker + ' this is the clicker');
+    console.log(currentImg[0]);
+  }
+
+  if (event.target.id === 'center_image') {
+    currentImg[1].clickCounter += 1;
+    clicker += 1;
+    console.log(clicker + ' this is the clicker');
+    console.log(currentImg[1]);
+  }
+
+  if (event.target.id === 'right_image'){
+    currentImg[2].clickCounter += 1;
+    clicker += 1;
+    console.log(clicker + ' this is the clicker');
+    console.log(currentImg[2]);
+  }
+
+  createImg();
 };
 
-handleClicks();
+surveyUl.addEventListener('click', handleClicks);
+
+function renderResults() {
+
+document.getElementById('printResults');
+
+// for ( var i = 0; i <= 25; i++){
+//   imageSources[i].clickCounter += 1;
+//   console.log(imageSources[i].clickCounter + ' clicks for ' + imageSources[i].imageName);
+  // return;
+// }
+}

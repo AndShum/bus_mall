@@ -1,0 +1,18 @@
+#surveyWrapper {
+  width: 960px;
+  margin: 0 auto;
+}
+
+li {
+  display: inline-block;
+}
+
+img {
+  width: 300px;
+}
+
+ul {
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,7 +1,13 @@
 'use strict';
+
 var imageSources = [];
 
-new ImageConstructor('Baby', 'img/baby.png');
+var getUl = document.getElementById('surveyUl');
+var leftPhoto = document.getElementById('left_image');
+var centerPhoto = document.getElementById('center_image');
+var rightPhoto = document.getElementById('right_image');
+
+new ImageConstructor('Baby', 'img/baby.jpg');
 new ImageConstructor('Banana', 'img/banana.jpg');
 new ImageConstructor('Bathroom', 'img/bathroom.jpg');
 new ImageConstructor('Breakfast', 'img/breakfast.jpg');
@@ -18,10 +24,9 @@ new ImageConstructor('Pizza Scissors', 'img/scissors.jpg');
 new ImageConstructor('Shark Sleeping Bag', 'img/shark.jpg');
 new ImageConstructor('Tauntaun Sleeping Bag', 'img/tauntaun.jpg');
 new ImageConstructor('Unicorn', 'img/tauntaun.jpg');
-new ImageConstructor('Tentacle USB', 'img/usb.gif');
-new ImageConstructor('Water Can', 'img/usb.gif');
+new ImageConstructor('Tentacle USB', 'img/usb.jpg');
+new ImageConstructor('Water Can', 'img/usb.jpg');
 new ImageConstructor('Wine Glass', 'img/wine_glass.jpg');
-
 
 function ImageConstructor(imageName, imagePath){
   this.imageName = imageName;
@@ -29,19 +34,14 @@ function ImageConstructor(imageName, imagePath){
   this.imageCounter = 0;
   this.clickCounter = 0;
   imageSources.push(this);
-  console.log(this);
+  // console.log(this);
 }
-
 
 var currentImg = [];
 
 function randomNumber(){
   return Math.floor(Math.random() * imageSources.length);
 }
-var leftPhoto = document.getElementById('left');
-var centerPhoto = document.getElementById('center');
-var rightPhoto = document.getElementById('right');
-
 
 function chooseImagesToDisplay() {
   var leftPhotoIndex = randomNumber();
@@ -65,26 +65,43 @@ function chooseImagesToDisplay() {
     centerPhotoIndex : centerPhotoIndex,
     rightPhotoIndex : rightPhotoIndex,
   };
-  console.log('imageIndices: ', imageIndices);
+  // console.log('imageIndices: ', imageIndices);
   return imageIndices;
 }
 
 function createImg(){
   var imageIndices = chooseImagesToDisplay();
+  console.log('imageIndices ' + imageIndices);
 
   var leftItem = imageSources[imageIndices.leftPhotoIndex].imagePath;
   var centerItem = imageSources[imageIndices.centerPhotoIndex].imagePath;
   var rightItem = imageSources[imageIndices.rightPhotoIndex].imagePath;
 
-
+  currentImg = [];
   currentImg.push(leftItem);
   currentImg.push(centerItem);
   currentImg.push(rightItem);
 
+  console.log('currentImg ' + currentImg );
+  leftPhoto.src = currentImg[0];
+  centerPhoto.src = currentImg[1];
+  rightPhoto.src = currentImg[2];
 }
 
 createImg();
 
-leftPhoto.src = currentImg[0];
-centerPhoto.src = currentImg[1];
-rightPhoto.src = currentImg[2];
+getUl.addEventListener('click', createImg);
+getUl.addEventListener('click', handleClicks);
+
+function handleClicks(){
+  if(event.target.id === 'getUl'){
+    console.log('You must click on an image.');
+  }
+  for ( var i = 0; i <= 25; i++){
+    ImageConstructor.clickCounter += 1;
+    console.log( ImageConstructor.clickCounter + ' clicks for ' + ImageConstructor.imageName);
+    return;
+  }
+};
+
+handleClicks();

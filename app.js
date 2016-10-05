@@ -1,13 +1,11 @@
 'use strict';
-
+var chartDrawn = false;
 var imageSources = [];
 var labelsForChart = [];
 var numOfVotesForChart = [];
 var clicker = 0;
 var buttonVisiblity = document.getElementById('printLi');
 buttonVisiblity.style.visbility = 'hidden';
-
-
 
 var surveyUl = document.getElementById('surveyUl');
 var leftPhoto = document.getElementById('left_image');
@@ -18,7 +16,7 @@ new ImageConstructor('Baby', 'img/baby.jpg');
 new ImageConstructor('Banana', 'img/banana.jpg');
 new ImageConstructor('Bathroom', 'img/bathroom.jpg');
 new ImageConstructor('Breakfast', 'img/breakfast.jpg');
-new ImageConstructor('Bubblegum', 'img/chair.jpg');
+new ImageConstructor('Bubblegum', 'img/bubblegum.jpg');
 new ImageConstructor('Chair', 'img/chair.jpg');
 new ImageConstructor('Cthulhu', 'img/cthulhu.jpg');
 new ImageConstructor('Dog Duck', 'img/dog_duck.jpg');
@@ -30,10 +28,16 @@ new ImageConstructor('Rain Boots', 'img/rain_boots.jpg');
 new ImageConstructor('Pizza Scissors', 'img/scissors.jpg');
 new ImageConstructor('Shark Sleeping Bag', 'img/shark.jpg');
 new ImageConstructor('Tauntaun Sleeping Bag', 'img/tauntaun.jpg');
-new ImageConstructor('Unicorn', 'img/tauntaun.jpg');
+new ImageConstructor('Unicorn', 'img/unicorn.jpg');
 new ImageConstructor('Tentacle USB', 'img/usb.jpg');
-new ImageConstructor('Water Can', 'img/usb.jpg');
+new ImageConstructor('Water Can', 'img/water_can.jpg');
 new ImageConstructor('Wine Glass', 'img/wine_glass.jpg');
+
+var hideChart = function() {
+  console.log(document.getElementById('voteChart'));
+  document.getElementById('voteChart').style.visibility = 'hidden';
+  console.log('hiding rapin errybody');
+};
 
 function ImageConstructor(imageName, imagePath){
   this.imageName = imageName;
@@ -55,15 +59,15 @@ function chooseImagesToDisplay() {
   var centerPhotoIndex = randomNumber();
   var rightPhotoIndex = randomNumber();
 
-  while(centerPhotoIndex === leftPhotoIndex){
+  while(centerPhotoIndex === leftPhotoIndex || imageSources[centerPhotoIndex] === currentImg[0] || imageSources[centerPhotoIndex] === currentImg[1] || imageSources[centerPhotoIndex] === currentImg[2]){
     centerPhotoIndex = randomNumber();
   }
 
-  while(rightPhotoIndex === leftPhotoIndex){
-    rightPhotoIndex = randomNumber();
+  while(leftPhotoIndex === rightPhotoIndex || imageSources[leftPhotoIndex] === currentImg[0] || imageSources[leftPhotoIndex] === currentImg[1] || imageSources[leftPhotoIndex] === currentImg[2]){
+    leftPhotoIndex = randomNumber();
   }
 
-  while(rightPhotoIndex === centerPhotoIndex){
+  while(rightPhotoIndex === centerPhotoIndex || imageSources[rightPhotoIndex] === currentImg[0] || imageSources[rightPhotoIndex] === currentImg[1] || imageSources[rightPhotoIndex] === currentImg[2]){
     rightPhotoIndex = randomNumber();
   }
 
@@ -106,6 +110,7 @@ function handleClicks(event){
   }
 
   if (clicker === 25){
+    saveGame();
     buttonVisiblity.style.visibility = 'visible';
     console.log('this is 25');
     return;
@@ -133,28 +138,45 @@ function handleClicks(event){
 
 };
 
-
-
 surveyUl.addEventListener('click', handleClicks);
 
 var printLi = document.getElementById('printLi');
 
 function renderResults() {
   listOfVotes.innerHTML = '';
-  for ( var i = 0; i <= 25; i++){
+  for ( var i = 0; i < imageSources.length; i++){
     var listEl = document.createElement('li');
     listEl.textContent = imageSources[i].clickCounter + ' clicks for ' + imageSources[i].imageName;
     listOfVotes.appendChild(listEl);
     console.log(imageSources[i].clickCounter + ' clicks for ' + imageSources[i].imageName);
   }
+  hideChart();
   return;
 }
 
+if(localStorage.getItem('savedImages')){
+  console.log('NEVER GONNA RUN');
+  var loadImages = localStorage.getItem('savedImages');
+  var newImageSources = JSON.parse(loadImages);
+  imageSources = newImageSources;
+} else{
+  saveGame();
+};
+
+function saveGame(){
+  var imagesStringified = JSON.stringify(imageSources);
+  localStorage.setItem('savedImages', imagesStringified);
+};
+
 function createChartArrays(){
+  event.preventDefault();
   for (var i = 0; i < imageSources.length; i++){
     numOfVotesForChart[i] = imageSources[i].clickCounter;
     labelsForChart[i] = imageSources[i].imageName;
   }
+  saveGame();
+  createChart();
+  document.getElementById('voteChart').style.visibility = 'visible';
 }
 
 printChart.addEventListener('click', createChartArrays);
@@ -163,28 +185,35 @@ printLi.addEventListener('click', renderResults);
 
 // Begin code for Chart
 
-var getChart = document.getElementById('voteChart');
 // var Chart = require('Chart.js');
 
-function createChart(){
-  var voteChart = new Chart(getChart, {
-    type: 'Bar',
-    data: {
-      labels: labelsForChart,
-      datasets: [{
-        label: 'Number Of Votes',
-        data: numOfVotesForChart,
-        backgroundColor: 'rgb(255, 199, 132)',
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero:true
-          }
-        }]
-      }
+var data = {
+  labels: labelsForChart,
+  datasets: [
+    {
+      label: 'Vote Results',
+      data: numOfVotesForChart,
+      backgroundColor: 'rgb(254, 14, 14)',
+      hoverBackgroundColor: 'rgb(0, 40, 251)'
     }
-  });
+  ]
 };
+
+function createChart(){
+  var getChart = document.getElementById('voteChart').getContext('2d');
+  var voteChart = new Chart(getChart, {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: false
+    },
+    scales: [{
+      ticks: {
+        beginAtZero: true
+      }
+    }]
+  });
+  chartDrawn = true;
+};
+
+hideChart();

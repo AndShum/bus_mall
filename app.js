@@ -2,6 +2,9 @@
 
 var imageSources = [];
 var clicker = 0;
+var buttonVisiblity = document.getElementById('printResults');
+buttonVisiblity.style.visbility = 'hidden';
+
 
 
 var surveyUl = document.getElementById('surveyUl');
@@ -101,8 +104,8 @@ function handleClicks(event){
   }
 
   if (clicker === 25){
-    var printResults = document.getElementById('printResults');
-    printResults.addEventListener('click', renderResults);
+    buttonVisiblity.style.visibility = 'visible';
+    console.log('this is 25');
     return;
   } else if (event.target.id === 'left_image') {
     currentImg[0].clickCounter += 1;
@@ -131,6 +134,7 @@ function handleClicks(event){
 
 surveyUl.addEventListener('click', handleClicks);
 
+var printResults = document.getElementById('printResults');
 
 function renderResults() {
   listOfVotes.innerHTML = '';
@@ -142,3 +146,6 @@ function renderResults() {
   }
   return;
 }
+
+
+printResults.addEventListener('click', renderResults);

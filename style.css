@@ -20,3 +20,7 @@ ul {
 #listOfVotes {
   flex-direction: column;
 }
+
+#printResults {
+  visibility: hidden;
+}

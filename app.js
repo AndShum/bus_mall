@@ -34,7 +34,9 @@ new ImageConstructor('Water Can', 'img/water_can.jpg');
 new ImageConstructor('Wine Glass', 'img/wine_glass.jpg');
 
 var hideChart = function() {
-  document.getElementById('voteChart').hidden = true;
+  console.log(document.getElementById('voteChart'));
+  document.getElementById('voteChart').style.visibility = 'hidden';
+  console.log('hiding rapin errybody');
 };
 
 function ImageConstructor(imageName, imagePath){
@@ -98,7 +100,6 @@ function createImg(){
 }
 
 createImg();
-hideChart();
 
 function handleClicks(event){
   console.log('handleClicks', event);
@@ -109,6 +110,7 @@ function handleClicks(event){
   }
 
   if (clicker === 25){
+    saveGame();
     buttonVisiblity.style.visibility = 'visible';
     console.log('this is 25');
     return;
@@ -152,13 +154,29 @@ function renderResults() {
   return;
 }
 
+if(localStorage.getItem('savedImages')){
+  console.log('NEVER GONNA RUN');
+  var loadImages = localStorage.getItem('savedImages');
+  var newImageSources = JSON.parse(loadImages);
+  imageSources = newImageSources;
+} else{
+  saveGame();
+};
+
+function saveGame(){
+  var imagesStringified = JSON.stringify(imageSources);
+  localStorage.setItem('savedImages', imagesStringified);
+};
+
 function createChartArrays(){
   event.preventDefault();
   for (var i = 0; i < imageSources.length; i++){
     numOfVotesForChart[i] = imageSources[i].clickCounter;
     labelsForChart[i] = imageSources[i].imageName;
   }
+  saveGame();
   createChart();
+  document.getElementById('voteChart').style.visibility = 'visible';
 }
 
 printChart.addEventListener('click', createChartArrays);
@@ -197,3 +215,5 @@ function createChart(){
   });
   chartDrawn = true;
 };
+
+hideChart();

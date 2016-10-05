@@ -3,12 +3,18 @@
   margin: 0 auto;
 }
 
+h1 {
+  font-family: 'Lakki Reddy', cursive;
+  font-size: 40px;
+}
+
 li {
   display: inline-block;
 }
 
 img {
   width: 300px;
+  box-shadow: 10px 10px 30px #808080;
 }
 
 ul {
@@ -21,7 +27,7 @@ ul {
   flex-direction: column;
 }
 
-#printResults {
+#printLi {
   visibility: hidden;
 }
 

@@ -1,8 +1,10 @@
 'use strict';
 
 var imageSources = [];
+var labelsForChart = [];
+var numOfVotesForChart = [];
 var clicker = 0;
-var buttonVisiblity = document.getElementById('printResults');
+var buttonVisiblity = document.getElementById('printLi');
 buttonVisiblity.style.visbility = 'hidden';
 
 
@@ -76,7 +78,7 @@ function chooseImagesToDisplay() {
 
 function createImg(){
   var imageIndices = chooseImagesToDisplay();
-  console.log('imageIndices ' + imageIndices);
+  console.log('imageIndices ', imageIndices);
 
   var leftItem = imageSources[imageIndices.leftPhotoIndex];
   var centerItem = imageSources[imageIndices.centerPhotoIndex];
@@ -87,7 +89,7 @@ function createImg(){
   currentImg.push(centerItem);
   currentImg.push(rightItem);
 
-  console.log('currentImg ' + currentImg );
+  console.log('currentImg ', currentImg );
   leftPhoto.src = currentImg[0].imagePath;
   centerPhoto.src = currentImg[1].imagePath;
   rightPhoto.src = currentImg[2].imagePath;
@@ -99,7 +101,7 @@ function handleClicks(event){
   console.log('handleClicks', event);
 
   if(event.target.id === 'surveyUl'){
-    console.log('You must click on an image.');
+    alert('You must click on an image.');
     return;
   }
 
@@ -132,25 +134,57 @@ function handleClicks(event){
 };
 
 
+
 surveyUl.addEventListener('click', handleClicks);
 
-var printResults = document.getElementById('printResults');
+var printLi = document.getElementById('printLi');
 
 function renderResults() {
   listOfVotes.innerHTML = '';
   for ( var i = 0; i <= 25; i++){
     var listEl = document.createElement('li');
-    listEl.textContent = imageSources[i].imageName + ' clicks for ' + imageSources[i].clickCounter;
+    listEl.textContent = imageSources[i].clickCounter + ' clicks for ' + imageSources[i].imageName;
     listOfVotes.appendChild(listEl);
     console.log(imageSources[i].clickCounter + ' clicks for ' + imageSources[i].imageName);
   }
   return;
 }
 
+function createChartArrays(){
+  for (var i = 0; i < imageSources.length; i++){
+    numOfVotesForChart[i] = imageSources[i].clickCounter;
+    labelsForChart[i] = imageSources[i].imageName;
+  }
+}
 
-printResults.addEventListener('click', renderResults);
+printChart.addEventListener('click', createChartArrays);
 
-var Chart = require('src/chart.js');
-var voteChart = new Chart(voteChart);
+printLi.addEventListener('click', renderResults);
+
+// Begin code for Chart
 
 var getChart = document.getElementById('voteChart');
+// var Chart = require('Chart.js');
+
+function createChart(){
+  var voteChart = new Chart(getChart, {
+    type: 'Bar',
+    data: {
+      labels: labelsForChart,
+      datasets: [{
+        label: 'Number Of Votes',
+        data: numOfVotesForChart,
+        backgroundColor: 'rgb(255, 199, 132)',
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      }
+    }
+  });
+};

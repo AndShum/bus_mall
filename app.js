@@ -149,3 +149,8 @@ function renderResults() {
 
 
 printResults.addEventListener('click', renderResults);
+
+var Chart = require('src/chart.js');
+var voteChart = new Chart(voteChart);
+
+var getChart = document.getElementById('voteChart');

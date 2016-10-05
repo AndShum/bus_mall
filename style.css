@@ -24,3 +24,10 @@ ul {
 #printResults {
   visibility: hidden;
 }
+
+#voteChart {
+  border: 2px solid black;
+  width: 960px;
+  margin: 0 auto;
+  display: block;
+}

@@ -1,5 +1,5 @@
 'use strict';
-
+var chartDrawn = false;
 var imageSources = [];
 var labelsForChart = [];
 var numOfVotesForChart = [];
@@ -32,6 +32,10 @@ new ImageConstructor('Unicorn', 'img/unicorn.jpg');
 new ImageConstructor('Tentacle USB', 'img/usb.jpg');
 new ImageConstructor('Water Can', 'img/water_can.jpg');
 new ImageConstructor('Wine Glass', 'img/wine_glass.jpg');
+
+var hideChart = function() {
+  document.getElementById('voteChart').hidden = true;
+};
 
 function ImageConstructor(imageName, imagePath){
   this.imageName = imageName;
@@ -94,6 +98,7 @@ function createImg(){
 }
 
 createImg();
+hideChart();
 
 function handleClicks(event){
   console.log('handleClicks', event);
@@ -131,8 +136,6 @@ function handleClicks(event){
 
 };
 
-
-
 surveyUl.addEventListener('click', handleClicks);
 
 var printLi = document.getElementById('printLi');
@@ -145,14 +148,17 @@ function renderResults() {
     listOfVotes.appendChild(listEl);
     console.log(imageSources[i].clickCounter + ' clicks for ' + imageSources[i].imageName);
   }
+  hideChart();
   return;
 }
 
 function createChartArrays(){
+  event.preventDefault();
   for (var i = 0; i < imageSources.length; i++){
     numOfVotesForChart[i] = imageSources[i].clickCounter;
     labelsForChart[i] = imageSources[i].imageName;
   }
+  createChart();
 }
 
 printChart.addEventListener('click', createChartArrays);
@@ -161,28 +167,33 @@ printLi.addEventListener('click', renderResults);
 
 // Begin code for Chart
 
-var getChart = document.getElementById('voteChart');
 // var Chart = require('Chart.js');
 
-function createChart(){
-  var voteChart = new Chart(getChart, {
-    type: 'Bar',
-    data: {
-      labels: labelsForChart,
-      datasets: [{
-        label: 'Number Of Votes',
-        data: numOfVotesForChart,
-        backgroundColor: 'rgb(255, 199, 132)',
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero:true
-          }
-        }]
-      }
+var data = {
+  labels: labelsForChart,
+  datasets: [
+    {
+      label: 'Vote Results',
+      data: numOfVotesForChart,
+      backgroundColor: 'rgb(254, 14, 14)',
+      hoverBackgroundColor: 'rgb(0, 40, 251)'
     }
+  ]
+};
+
+function createChart(){
+  var getChart = document.getElementById('voteChart').getContext('2d');
+  var voteChart = new Chart(getChart, {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: false
+    },
+    scales: [{
+      ticks: {
+        beginAtZero: true
+      }
+    }]
   });
+  chartDrawn = true;
 };

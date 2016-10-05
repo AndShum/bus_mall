@@ -95,13 +95,16 @@ createImg();
 function handleClicks(event){
   console.log('handleClicks', event);
 
-
   if(event.target.id === 'surveyUl'){
     console.log('You must click on an image.');
     return;
   }
 
-  if (event.target.id === 'left_image') {
+  if (clicker === 25){
+    var printResults = document.getElementById('printResults');
+    printResults.addEventListener('click', renderResults);
+    return;
+  } else if (event.target.id === 'left_image') {
     currentImg[0].clickCounter += 1;
     clicker += 1;
     console.log(clicker + ' this is the clicker');
@@ -121,13 +124,13 @@ function handleClicks(event){
     console.log(clicker + ' this is the clicker');
     console.log(currentImg[2]);
   }
-
   createImg();
+
 };
+
 
 surveyUl.addEventListener('click', handleClicks);
 
-var printResults = document.getElementById('printResults');
 
 function renderResults() {
   listOfVotes.innerHTML = '';
@@ -139,6 +142,3 @@ function renderResults() {
   }
   return;
 }
-
-
-printResults.addEventListener('click', renderResults);

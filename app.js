@@ -36,7 +36,6 @@ new ImageConstructor('Wine Glass', 'img/wine_glass.jpg');
 var hideChart = function() {
   console.log(document.getElementById('voteChart'));
   document.getElementById('voteChart').style.visibility = 'hidden';
-  console.log('hiding rapin errybody');
 };
 
 function ImageConstructor(imageName, imagePath){

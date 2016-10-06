@@ -4,8 +4,8 @@ var imageSources = [];
 var labelsForChart = [];
 var numOfVotesForChart = [];
 var clicker = 0;
-var buttonVisiblity = document.getElementById('printLi');
-buttonVisiblity.style.visbility = 'hidden';
+var liButtonVisiblity = document.getElementById('printLi');
+var chartButtonVisiblity = document.getElementById('printChart');
 
 var surveyUl = document.getElementById('surveyUl');
 var leftPhoto = document.getElementById('left_image');
@@ -111,8 +111,9 @@ function handleClicks(event){
 
   if (clicker === 25){
     saveGame();
-    buttonVisiblity.style.visibility = 'visible';
-    console.log('this is 25');
+    liButtonVisiblity.style.visibility = 'visible';
+    chartButtonVisiblity.style.visibility = 'visible';
+    alert("That's 25! Click below to view your results!")
     return;
   } else if (event.target.id === 'left_image') {
     currentImg[0].clickCounter += 1;
@@ -155,7 +156,6 @@ function renderResults() {
 }
 
 if(localStorage.getItem('savedImages')){
-  console.log('NEVER GONNA RUN');
   var loadImages = localStorage.getItem('savedImages');
   var newImageSources = JSON.parse(loadImages);
   imageSources = newImageSources;
@@ -188,12 +188,13 @@ printLi.addEventListener('click', renderResults);
 // var Chart = require('Chart.js');
 
 var data = {
+  backgroundColor: 'rgb(255, 255, 255)',
   labels: labelsForChart,
   datasets: [
     {
       label: 'Vote Results',
       data: numOfVotesForChart,
-      backgroundColor: 'rgb(254, 14, 14)',
+      backgroundColor: 'rgb(178, 52, 70)',
       hoverBackgroundColor: 'rgb(0, 40, 251)'
     }
   ]

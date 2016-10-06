@@ -1,11 +1,55 @@
-#surveyWrapper {
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #50a5cc;
+}
+
+header {
+  /*box-shadow: 10px 10px 25px #7f7f7f;*/
+  padding: 10px 0;
   width: 960px;
+  height: 80px;
   margin: 0 auto;
 }
 
 h1 {
   font-family: 'Lakki Reddy', cursive;
-  font-size: 40px;
+  font-size: 60px;
+  color: #fffa7d;
+  display: inline;
+}
+
+.bus {
+  box-shadow: none;
+  display: inline;
+  width: 150px;
+  padding-left: 50px;
+  position: relative;;
+  bottom: 0;
+}
+
+#surveyWrapper {
+  width: 960px;
+  margin: 0 auto;
+}
+
+#surveyUl {
+  margin: 50px auto;
+}
+
+.welcome {
+  font-family: 'Sriracha', cursive;
+  font-size: 50px;
+  margin: 0;
+}
+
+.gameInfo {
+  font-family: 'Sriracha', cursive;
+  font-size: 20px;
+}
+p {
+  text-align: center;
+  color: #fffa7d;
 }
 
 li {
@@ -14,7 +58,7 @@ li {
 
 img {
   width: 300px;
-  box-shadow: 10px 10px 30px #808080;
+  box-shadow: 10px 10px 25px #000000;
 }
 
 ul {
@@ -27,8 +71,34 @@ ul {
   flex-direction: column;
 }
 
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 700px;
+  margin: 0 auto;
+}
+
 #printLi {
-  visibility: hidden;
+  font-family: 'Sriracha', cursive;
+  font-size: 20px;
+  color: #fffa7d;
+  background-color: #b23446;
+  visibility: visible;
+  width: 300px;
+  height: 100px;
+  cursor: pointer;
+}
+
+#printChart {
+  font-family: 'Sriracha', cursive;
+  font-size: 20px;
+  color: #fffa7d;
+  background-color: #b23446;
+  visibility: visible;
+  padding: 20px 25px;
+  width: 300px;
+  height: 100px;
+  cursor: pointer;
 }
 
 #voteChart {
@@ -36,4 +106,16 @@ ul {
   width: 960px;
   margin: 0 auto;
   display: block;
+  background-color: white;
+}
+
+ul {
+  width: 960px;
+  margin: 10px auto;
+}
+
+ul li {
+  font-family: 'Sriracha', cursive;
+  font-size: 20px;
+  color: #fffa7d;
 }

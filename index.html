@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Bus Mall</title>
-    <link href="https://fonts.googleapis.com/css?family=Lakki+Reddy" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lakki+Reddy|Sriracha" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <script src="Chart.min.js"></script>
   </head>
@@ -11,9 +11,12 @@
 
     <header>
       <h1>Bus Mall</h1>
+      <img src="img/busCartoon.png" alt="bus cartoon" class="bus">
     </header>
 
     <div id="surveyWrapper">
+      <p class="welcome">Welcome user!</p>
+      <p class="gameInfo">Below is a short game where we request that you click on the image that most draws your attention. You will be presented with 25 images and upon making your final selection you will be able to view your choices.</P>
       <ul id="surveyUl">
         <li><img src="" id="left_image"></li>
         <li><img src="" id="center_image"></li>
@@ -21,9 +24,13 @@
       </ul>
     </div>
 
+    <div class="buttons">
+      <button id="printLi">Print a Results List</button>
+      <button id="printChart">Print a Results Chart </button>
+    </div>
+
     <ul id="listOfVotes"></ul>
-    <button id="printLi">Print a Results List</button>
-    <button id="printChart">Print a Results Chart </button>
+
     <canvas id="voteChart" width="960" height="300"></canvas>
 
     <script src="app.js"></script>
